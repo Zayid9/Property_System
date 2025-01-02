@@ -100,6 +100,12 @@ const Properties = () => {
       showErrorToast("You can upload up to 4 images only.");
       return;
     }
+
+    if (images.some((img) => img.name === file.name)) {
+      showErrorToast("Duplicate image detected.");
+      return;
+    }
+
     setImages((prevImages) => [...prevImages, file]);
     showToast("Image uploaded successfully!");
   };
@@ -451,8 +457,9 @@ const Properties = () => {
                       color="secondary"
                       startIcon={<AddPhotoAlternate />}
                       component="span"
+                      disabled={images.length >= 4}
                     >
-                      Upload Images (Max: 4)
+                      Upload Images (Max: {4 - images.length})
                     </Button>
                   </label>
                 </Box>
